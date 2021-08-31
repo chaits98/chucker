@@ -1,12 +1,7 @@
 package com.chuckerteam.chucker.internal.support
 
 import com.google.common.truth.Truth.assertThat
-import okio.Buffer
-import okio.BufferedSource
-import okio.ByteString
-import okio.Okio
-import okio.Source
-import okio.Timeout
+import okio.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -18,7 +13,7 @@ internal class DepletingSourceTest {
         val delegate = Buffer().writeUtf8("Hello, world!")
         val depletingSource = DepletingSource(delegate)
 
-        val content = Okio.buffer(depletingSource).use(BufferedSource::readByteString)
+        val content = depletingSource.buffer().use(BufferedSource::readByteString)
 
         assertThat(content.utf8()).isEqualTo("Hello, world!")
     }
