@@ -14,6 +14,7 @@ import com.chuckerteam.chucker.internal.support.JsonConverter
 import com.google.gson.reflect.TypeToken
 import okhttp3.Headers
 import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import java.util.Date
 
 /**
@@ -166,8 +167,8 @@ internal class HttpTransaction(
         )
     }
 
-    fun getRequestHeadersString(withMarkup: Boolean): String {
-        return FormatUtils.formatHeaders(getParsedRequestHeaders(), withMarkup)
+    fun getRequestHeadersString(withMarkup: Boolean, headersToRedact: List<String>): String {
+        return FormatUtils.formatHeaders(getParsedRequestHeaders()?.redact(headersToRedact), withMarkup)
     }
 
     fun setResponseHeaders(headers: Headers) {
@@ -178,13 +179,13 @@ internal class HttpTransaction(
         responseHeaders = JsonConverter.instance.toJson(headers)
     }
 
-    fun getResponseHeadersString(withMarkup: Boolean): String {
-        return FormatUtils.formatHeaders(getParsedResponseHeaders(), withMarkup)
+    fun getResponseHeadersString(withMarkup: Boolean, headersToRedact: List<String>): String {
+        return FormatUtils.formatHeaders(getParsedResponseHeaders()?.redact(headersToRedact), withMarkup)
     }
 
     private fun toHttpHeaderList(headers: Headers): List<HttpHeader> {
         val httpHeaders = ArrayList<HttpHeader>()
-        for (i in 0 until headers.size()) {
+        for (i in 0 until headers.size) {
             httpHeaders.add(HttpHeader(headers.name(i), headers.value(i)))
         }
         return httpHeaders
@@ -223,12 +224,12 @@ internal class HttpTransaction(
     }
 
     fun getFormattedUrl(encode: Boolean): String {
-        val httpUrl = url?.let(HttpUrl::get) ?: return ""
+        val httpUrl = url?.toHttpUrl() ?: return ""
         return FormattedUrl.fromHttpUrl(httpUrl, encode).url
     }
 
     fun getFormattedPath(encode: Boolean): String {
-        val httpUrl = url?.let(HttpUrl::get) ?: return ""
+        val httpUrl = url?.toHttpUrl() ?: return ""
         return FormattedUrl.fromHttpUrl(httpUrl, encode).pathWithQuery
     }
 
@@ -266,4 +267,23 @@ internal class HttpTransaction(
             (isResponseBodyPlainText == other.isResponseBodyPlainText) &&
             (responseImageData?.contentEquals(other.responseImageData ?: byteArrayOf()) != false)
     }
+}
+
+/**
+ * This is an extension function used to fetch redacted headers,
+ * this returns a new list instead of modifying the current instance of headers list
+ * @param {Iterable<String>} iterable of header names to be redacted
+ * @return {List<HttpHeader>} a new list headers
+ */
+internal fun List<HttpHeader>.redact(iterable: Iterable<String>): List<HttpHeader> {
+    val list = ArrayList<HttpHeader>()
+
+    this.forEach { httpHeader ->
+        if (iterable.any { headerName -> httpHeader.name.equals(headerName, true)}) {
+            list.add(HttpHeader(httpHeader.name, "**"))
+        } else {
+            list.add(HttpHeader(httpHeader.name, httpHeader.value))
+        }
+    }
+    return list
 }

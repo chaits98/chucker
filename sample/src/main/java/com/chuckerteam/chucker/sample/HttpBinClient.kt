@@ -7,6 +7,7 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
 import com.chuckerteam.chucker.sample.HttpBinApi.Data
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
@@ -35,7 +36,7 @@ class HttpBinClient(
         context = context,
         collector = collector,
         maxContentLength = 250000L,
-        headersToRedact = emptySet<String>()
+        headersToRedact = setOf("Content-Encoding")
     )
 
     private val httpClient =
@@ -65,37 +66,37 @@ class HttpBinClient(
         }
 
         with(api) {
-            get().enqueue(cb)
-            post(Data("posted")).enqueue(cb)
-            patch(Data("patched")).enqueue(cb)
-            put(Data("put")).enqueue(cb)
-            delete().enqueue(cb)
-            status(201).enqueue(cb)
-            status(401).enqueue(cb)
-            status(500).enqueue(cb)
-            delay(9).enqueue(cb)
-            delay(15).enqueue(cb)
-            redirectTo("https://http2.akamai.com").enqueue(cb)
-            redirect(3).enqueue(cb)
-            redirectRelative(2).enqueue(cb)
-            redirectAbsolute(4).enqueue(cb)
-            stream(500).enqueue(cb)
-            streamBytes(2048).enqueue(cb)
-            image("image/png").enqueue(cb)
-            gzipResponse().enqueue(cb)
+//            get().enqueue(cb)
+//            post(Data("posted")).enqueue(cb)
+//            patch(Data("patched")).enqueue(cb)
+//            put(Data("put")).enqueue(cb)
+//            delete().enqueue(cb)
+//            status(201).enqueue(cb)
+//            status(401).enqueue(cb)
+//            status(500).enqueue(cb)
+//            delay(9).enqueue(cb)
+//            delay(15).enqueue(cb)
+//            redirectTo("https://http2.akamai.com").enqueue(cb)
+//            redirect(3).enqueue(cb)
+//            redirectRelative(2).enqueue(cb)
+//            redirectAbsolute(4).enqueue(cb)
+//            stream(500).enqueue(cb)
+//            streamBytes(2048).enqueue(cb)
+//            image("image/png").enqueue(cb)
+//            gzipResponse().enqueue(cb)
             gzipRequest(Data("Some gzip request")).enqueue(cb)
-            xml().enqueue(cb)
-            utf8().enqueue(cb)
-            deflate().enqueue(cb)
-            cookieSet("v").enqueue(cb)
-            basicAuth("me", "pass").enqueue(cb)
-            drip(512, 10, 1, 200).enqueue(cb)
-            deny().enqueue(cb)
-            cache("Mon").enqueue(cb)
-            cache(30).enqueue(cb)
-            redirectTo("https://ascii.cl?parameter=%22Click+on+%27URL+Encode%27%21%22").enqueue(cb)
-            redirectTo("https://ascii.cl?parameter=\"Click on 'URL Encode'!\"").enqueue(cb)
-            postForm("Value 1", "Value with symbols &$%").enqueue(cb)
+//            xml().enqueue(cb)
+//            utf8().enqueue(cb)
+//            deflate().enqueue(cb)
+//            cookieSet("v").enqueue(cb)
+//            basicAuth("me", "pass").enqueue(cb)
+//            drip(512, 10, 1, 200).enqueue(cb)
+//            deny().enqueue(cb)
+//            cache("Mon").enqueue(cb)
+//            cache(30).enqueue(cb)
+//            redirectTo("https://ascii.cl?parameter=%22Click+on+%27URL+Encode%27%21%22").enqueue(cb)
+//            redirectTo("https://ascii.cl?parameter=\"Click on 'URL Encode'!\"").enqueue(cb)
+//            postForm("Value 1", "Value with symbols &$%").enqueue(cb)
         }
         downloadSampleImage(colorHex = "fff")
         downloadSampleImage(colorHex = "000")
@@ -122,14 +123,14 @@ class HttpBinClient(
                 override fun onFailure(call: okhttp3.Call, e: IOException) = Unit
 
                 override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
-                    response.body()?.source()?.use { it.readByteString() }
+                    response.body?.source()?.use { it.readByteString() }
                 }
             }
         )
     }
 
     private fun getResponsePartially() {
-        val body = RequestBody.create(MediaType.get("application/json"), LARGE_JSON)
+        val body = RequestBody.create("application/json".toMediaType(), LARGE_JSON)
         val request = Request.Builder()
             .url("https://postman-echo.com/post")
             .post(body)
@@ -139,7 +140,7 @@ class HttpBinClient(
                 override fun onFailure(call: okhttp3.Call, e: IOException) = Unit
 
                 override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
-                    response.body()?.source()?.use { it.readByteString(SEGMENT_SIZE) }
+                    response.body?.source()?.use { it.readByteString(SEGMENT_SIZE) }
                 }
             }
         )

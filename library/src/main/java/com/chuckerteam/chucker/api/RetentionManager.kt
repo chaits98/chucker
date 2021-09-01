@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import com.chuckerteam.chucker.internal.data.repository.RepositoryProvider
 import com.chuckerteam.chucker.internal.support.Logger.info
 import kotlinx.coroutines.CoroutineScope
+import com.chuckerteam.chucker.internal.support.PrefUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
@@ -29,6 +30,7 @@ public class RetentionManager @JvmOverloads constructor(
     private val prefs: SharedPreferences = context.getSharedPreferences(PREFS_NAME, 0)
 
     init {
+        PrefUtils.getInstance(context).setRetentionPeriod(retentionPeriod)
         cleanupFrequency = if (retentionPeriod == Period.ONE_HOUR) {
             TimeUnit.MINUTES.toMillis(30)
         } else {

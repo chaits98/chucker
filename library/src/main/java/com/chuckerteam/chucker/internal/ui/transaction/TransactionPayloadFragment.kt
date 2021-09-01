@@ -24,6 +24,8 @@ import androidx.lifecycle.lifecycleScope
 import com.chuckerteam.chucker.R
 import com.chuckerteam.chucker.databinding.ChuckerFragmentTransactionPayloadBinding
 import com.chuckerteam.chucker.internal.data.entity.HttpTransaction
+import com.chuckerteam.chucker.internal.support.Logger
+import com.chuckerteam.chucker.internal.support.PrefUtils
 import com.chuckerteam.chucker.internal.support.calculateLuminance
 import com.chuckerteam.chucker.internal.support.combineLatest
 import kotlinx.coroutines.Dispatchers
@@ -175,7 +177,6 @@ internal class TransactionPayloadFragment :
 
     private fun shouldShowSaveIcon(transaction: HttpTransaction?) = when {
         // SAF is not available on pre-Kit Kat so let's hide the icon.
-        (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) -> false
         (payloadType == PayloadType.REQUEST) -> (0L != (transaction?.requestPayloadSize))
         (payloadType == PayloadType.RESPONSE) -> (0L != (transaction?.responsePayloadSize))
         else -> true
@@ -224,7 +225,7 @@ internal class TransactionPayloadFragment :
             val bodyString: String
 
             if (type == PayloadType.REQUEST) {
-                headersString = transaction.getRequestHeadersString(true)
+                headersString = transaction.getRequestHeadersString(true, PrefUtils.getInstance(requireContext()).getRedactedHeaders())
                 isBodyPlainText = transaction.isRequestBodyPlainText
                 bodyString = if (formatRequestBody) {
                     transaction.getFormattedRequestBody()
@@ -232,7 +233,7 @@ internal class TransactionPayloadFragment :
                     transaction.requestBody ?: ""
                 }
             } else {
-                headersString = transaction.getResponseHeadersString(true)
+                headersString = transaction.getResponseHeadersString(true, PrefUtils.getInstance(requireContext()).getRedactedHeaders())
                 isBodyPlainText = transaction.isResponseBodyPlainText
                 bodyString = transaction.getFormattedResponseBody()
             }
