@@ -1,7 +1,7 @@
 buildscript {
     ext {
-        kotlinVersion = '1.5.21'
-        androidGradleVersion = '7.0.0'
+        kotlinVersion = '1.5.30'
+        androidGradleVersion = '7.0.1'
         coroutineVersion = '1.5.1'
 
         // Google libraries
@@ -16,14 +16,14 @@ buildscript {
         paletteKtxVersion = '1.0.0'
 
         // Networking
-        gsonVersion = '2.8.7'
+        gsonVersion = '2.8.8'
         okhttpVersion = '4.9.1'
         retrofitVersion = '2.9.0'
         wireVersion = '3.7.0'
 
         // Debug and quality control
-        binaryCompatibilityValidator = '0.6.0'
-        detektVersion = '1.17.1'
+        binaryCompatibilityValidator = '0.7.1'
+        detektVersion = '1.18.1'
         dokkaVersion = '1.5.0'
         ktLintGradleVersion = '10.0.0'
         leakcanaryVersion = '2.7'
