@@ -2,7 +2,12 @@ package com.chuckerteam.chucker.internal.support
 
 import com.chuckerteam.chucker.SEGMENT_SIZE
 import com.google.common.truth.Truth.assertThat
-import okio.*
+import okio.Buffer
+import okio.ByteString
+import okio.Source
+import okio.Timeout
+import okio.buffer
+import okio.source
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import java.io.File

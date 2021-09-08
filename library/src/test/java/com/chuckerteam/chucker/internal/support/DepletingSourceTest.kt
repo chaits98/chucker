@@ -1,7 +1,12 @@
 package com.chuckerteam.chucker.internal.support
 
 import com.google.common.truth.Truth.assertThat
-import okio.*
+import okio.Buffer
+import okio.BufferedSource
+import okio.ByteString
+import okio.Source
+import okio.Timeout
+import okio.buffer
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
@@ -24,7 +23,6 @@ import androidx.lifecycle.lifecycleScope
 import com.chuckerteam.chucker.R
 import com.chuckerteam.chucker.databinding.ChuckerFragmentTransactionPayloadBinding
 import com.chuckerteam.chucker.internal.data.entity.HttpTransaction
-import com.chuckerteam.chucker.internal.support.Logger
 import com.chuckerteam.chucker.internal.support.PrefUtils
 import com.chuckerteam.chucker.internal.support.calculateLuminance
 import com.chuckerteam.chucker.internal.support.combineLatest
@@ -225,7 +223,10 @@ internal class TransactionPayloadFragment :
             val bodyString: String
 
             if (type == PayloadType.REQUEST) {
-                headersString = transaction.getRequestHeadersString(true, PrefUtils.getInstance(requireContext()).getRedactedHeaders())
+                headersString = transaction.getRequestHeadersString(
+                    true,
+                    PrefUtils.getInstance(requireContext()).getRedactedHeaders()
+                )
                 isBodyPlainText = transaction.isRequestBodyPlainText
                 bodyString = if (formatRequestBody) {
                     transaction.getFormattedRequestBody()
@@ -233,7 +234,10 @@ internal class TransactionPayloadFragment :
                     transaction.requestBody ?: ""
                 }
             } else {
-                headersString = transaction.getResponseHeadersString(true, PrefUtils.getInstance(requireContext()).getRedactedHeaders())
+                headersString = transaction.getResponseHeadersString(
+                    true,
+                    PrefUtils.getInstance(requireContext()).getRedactedHeaders()
+                )
                 isBodyPlainText = transaction.isResponseBodyPlainText
                 bodyString = transaction.getFormattedResponseBody()
             }

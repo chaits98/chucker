@@ -436,7 +436,10 @@ internal class ChuckerInterceptorTest {
         val originalTransaction = chuckerInterceptor.expectTransaction()
         val originalHeaders = originalTransaction.getParsedRequestHeaders()
         assert(!originalHeaders.isNullOrEmpty())
-        val repeatRequest = Request.Builder().url(originalTransaction.getFormattedUrl(false)).header(originalHeaders!![0].name, originalHeaders[0].value).build()
+        val repeatRequest = Request.Builder()
+            .url(originalTransaction.getFormattedUrl(false))
+            .header(originalHeaders!![0].name, originalHeaders[0].value)
+            .build()
         server.enqueue(MockResponse().setSocketPolicy(SocketPolicy.DISCONNECT_AT_START))
         runCatching { client.newCall(repeatRequest).execute() }
 

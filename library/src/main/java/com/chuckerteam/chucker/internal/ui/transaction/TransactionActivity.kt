@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -16,7 +15,7 @@ import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.databinding.ChuckerActivityTransactionBinding
 import com.chuckerteam.chucker.internal.data.entity.HttpTransaction
-import com.chuckerteam.chucker.internal.support.*
+import com.chuckerteam.chucker.internal.support.PrefUtils
 import com.chuckerteam.chucker.internal.support.Sharable
 import com.chuckerteam.chucker.internal.support.TransactionCurlCommandSharable
 import com.chuckerteam.chucker.internal.support.TransactionDetailsSharable
@@ -65,7 +64,6 @@ internal class TransactionActivity : BaseChuckerActivity() {
 
         val chuckerInterceptor = ChuckerInterceptor.Builder(applicationContext)
             .collector(collector)
-            .maxContentLength(250_000L)
             .redactHeaders(redactedHeaders)
             .build()
 

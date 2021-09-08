@@ -22,7 +22,9 @@ public class PrefUtils private constructor(context: Context) {
         }
     }
 
-    public fun getRetentionPeriod(): RetentionManager.Period = when (prefs.getString(KEY_RETENTION_PERIOD, "ONE_WEEK")) {
+    public fun getRetentionPeriod(): RetentionManager.Period = when (
+        prefs.getString(KEY_RETENTION_PERIOD, "ONE_WEEK")
+    ) {
         "ONE_HOUR" -> RetentionManager.Period.ONE_HOUR
         "ONE_DAY" -> RetentionManager.Period.ONE_DAY
         "FOREVER" -> RetentionManager.Period.FOREVER

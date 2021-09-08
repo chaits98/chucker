@@ -2,11 +2,11 @@ package com.chuckerteam.chucker.api
 
 import android.content.Context
 import com.chuckerteam.chucker.internal.data.entity.HttpTransaction
-import com.chuckerteam.chucker.internal.support.*
 import com.chuckerteam.chucker.internal.support.CacheDirectoryProvider
 import com.chuckerteam.chucker.internal.support.DepletingSource
 import com.chuckerteam.chucker.internal.support.FileFactory
 import com.chuckerteam.chucker.internal.support.IOUtils
+import com.chuckerteam.chucker.internal.support.PrefUtils
 import com.chuckerteam.chucker.internal.support.ReportingSink
 import com.chuckerteam.chucker.internal.support.TeeSource
 import com.chuckerteam.chucker.internal.support.contentType
@@ -17,7 +17,11 @@ import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.ResponseBody
-import okio.*
+import okio.Buffer
+import okio.GzipSource
+import okio.Source
+import okio.buffer
+import okio.source
 import java.io.File
 import java.io.IOException
 import java.nio.charset.Charset

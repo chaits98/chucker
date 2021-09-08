@@ -4,7 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.chuckerteam.chucker.internal.support.hasBody
 import okhttp3.Response
-import okio.*
+import okio.Buffer
+import okio.ByteString
+import okio.buffer
+import okio.source
 import java.io.File
 
 internal const val SEGMENT_SIZE = 8_192L

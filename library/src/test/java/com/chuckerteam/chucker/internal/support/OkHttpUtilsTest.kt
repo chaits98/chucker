@@ -3,7 +3,6 @@ package com.chuckerteam.chucker.internal.support
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
-import okhttp3.Headers
 import okhttp3.Headers.Companion.headersOf
 import okhttp3.Request
 import okhttp3.Response

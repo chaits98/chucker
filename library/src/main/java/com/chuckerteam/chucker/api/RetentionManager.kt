@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.chuckerteam.chucker.internal.data.repository.RepositoryProvider
 import com.chuckerteam.chucker.internal.support.Logger.info
-import kotlinx.coroutines.CoroutineScope
 import com.chuckerteam.chucker.internal.support.PrefUtils
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit

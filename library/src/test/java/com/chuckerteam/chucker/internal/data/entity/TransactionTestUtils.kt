@@ -2,7 +2,6 @@ package com.chuckerteam.chucker.internal.data.entity
 
 import com.google.common.truth.Truth.assertThat
 import okhttp3.Headers
-import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import java.util.UUID
 

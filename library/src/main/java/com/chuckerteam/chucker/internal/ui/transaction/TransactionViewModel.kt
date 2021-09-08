@@ -1,6 +1,10 @@
 package com.chuckerteam.chucker.internal.ui.transaction
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.map
 import com.chuckerteam.chucker.internal.data.entity.HttpTransaction
 import com.chuckerteam.chucker.internal.data.repository.RepositoryProvider
 import com.chuckerteam.chucker.internal.support.combineLatest
@@ -53,23 +57,19 @@ internal class TransactionViewModel(transactionId: Long) : ViewModel() {
 
     fun repeatRequest(okhttpClient: OkHttpClient, callback: Callback) {
         transaction.value?.let {
-            try {
-                val headers = it.getParsedRequestHeaders()
-                val body = it.getFormattedRequestBody()
+            val headers = it.getParsedRequestHeaders()
+            val body = it.getFormattedRequestBody()
 
-                val requestBuilder: Request.Builder = Request.Builder().url(it.url.toString())
-                if (headers != null) {
-                    for (header in headers) {
-                        requestBuilder.addHeader(header.name, header.value)
-                    }
+            val requestBuilder: Request.Builder = Request.Builder().url(it.url.toString())
+            if (headers != null) {
+                for (header in headers) {
+                    requestBuilder.addHeader(header.name, header.value)
                 }
-                if (it.method != null &&  it.requestContentType != null) {
-                    requestBuilder.method(it.method!!, body.toRequestBody(it.requestContentType!!.toMediaType()))
-                }
-                okhttpClient.newCall(requestBuilder.build()).enqueue(callback)
-            } catch (ex: Exception) {
-                ex.printStackTrace()
             }
+            if (it.method != null && it.requestContentType != null) {
+                requestBuilder.method(it.method!!, body.toRequestBody(it.requestContentType!!.toMediaType()))
+            }
+            okhttpClient.newCall(requestBuilder.build()).enqueue(callback)
         }
     }
 }

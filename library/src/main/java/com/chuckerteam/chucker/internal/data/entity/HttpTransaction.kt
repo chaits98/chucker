@@ -279,7 +279,7 @@ internal fun List<HttpHeader>.redact(iterable: Iterable<String>): List<HttpHeade
     val list = ArrayList<HttpHeader>()
 
     this.forEach { httpHeader ->
-        if (iterable.any { headerName -> httpHeader.name.equals(headerName, true)}) {
+        if (iterable.any { headerName -> httpHeader.name.equals(headerName, true) }) {
             list.add(HttpHeader(httpHeader.name, "**"))
         } else {
             list.add(HttpHeader(httpHeader.name, httpHeader.value))
