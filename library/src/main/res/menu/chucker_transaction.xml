@@ -46,4 +46,10 @@
         android:id="@+id/repeat_request"
         app:showAsAction="ifRoom">
     </item>
+    <item
+        android:icon="@drawable/chucker_ic_edit_white"
+        android:title="@string/chucker_edit_request"
+        android:id="@+id/edit_request"
+        app:showAsAction="ifRoom">
+    </item>
 </menu>

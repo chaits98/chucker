@@ -132,6 +132,12 @@ internal class TransactionActivity : BaseChuckerActivity() {
             viewModel.repeatRequest(client, repeatRequestCallback)
             true
         }
+        R.id.edit_request -> {
+            viewModel.transaction.value?.let {
+                startActivity(TransactionEditActivity.getLaunchIntent(this, transaction = it))
+            }
+            true
+        }
         else -> super.onOptionsItemSelected(item)
     }
 

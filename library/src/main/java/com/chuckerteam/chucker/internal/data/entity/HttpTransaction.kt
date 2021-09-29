@@ -80,6 +80,33 @@ internal class HttpTransaction(
         responseImageData = null
     )
 
+    @Ignore
+    constructor(httpTransaction: HttpTransaction) : this(
+        requestDate = httpTransaction.requestDate,
+        responseDate = httpTransaction.responseDate,
+        tookMs = httpTransaction.tookMs,
+        protocol = httpTransaction.protocol,
+        method = httpTransaction.method,
+        url = httpTransaction.url,
+        host = httpTransaction.host,
+        path = httpTransaction.path,
+        scheme = httpTransaction.scheme,
+        responseTlsVersion = httpTransaction.responseTlsVersion,
+        responseCipherSuite = httpTransaction.responseCipherSuite,
+        requestPayloadSize = httpTransaction.requestPayloadSize,
+        requestContentType = httpTransaction.requestContentType,
+        requestHeaders = httpTransaction.requestHeaders,
+        requestBody = httpTransaction.requestBody,
+        responseCode = httpTransaction.responseCode,
+        responseMessage = httpTransaction.responseMessage,
+        error = httpTransaction.error,
+        responsePayloadSize = httpTransaction.responsePayloadSize,
+        responseContentType = httpTransaction.responseContentType,
+        responseHeaders = httpTransaction.responseHeaders,
+        responseBody = httpTransaction.responseBody,
+        responseImageData = httpTransaction.responseImageData
+    )
+
     enum class Status {
         Requested,
         Complete,

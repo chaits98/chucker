@@ -66,6 +66,11 @@
     <string name="chucker_response_is_empty">This response is empty</string>
     <string name="chucker_shortcut_label">Open Chucker</string>
     <string name="chucker_repeat_request">Repeat Request</string>
+    <string name="chucker_edit_request">Edit Request</string>
     <string name="chucker_request_failed">Request Failed</string>
     <string name="chucker_request_complete">Request Complete</string>
+    <string name="chucker_edit_transaction">Edit Transaction</string>
+    <string name="chucker_send">Send</string>
+    <string name="chucker_transaction_body">Transaction Body</string>
+    <string name="chucker_request_headers">Request Headers</string>
 </resources>
